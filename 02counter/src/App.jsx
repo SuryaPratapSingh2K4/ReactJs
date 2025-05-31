@@ -7,12 +7,20 @@ function App() {
   let [counter,setcounter] = useState(7)
 
   const Addvalue = () => {
-    setcounter(counter+1),
+    setcounter(counter+1)
+    if(counter >= 20){
+      setcounter(20)
+    }
     console.log("clicked",counter)
   }
 
   const Removevalue = () => {
+    
     setcounter(counter-1)
+    if(counter <= 0){
+      setcounter(0);
+    }
+
     console.log("clicked",counter)
   }
 
