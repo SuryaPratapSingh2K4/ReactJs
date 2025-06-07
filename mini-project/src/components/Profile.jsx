@@ -7,7 +7,7 @@ function Profile() {
 
     if(!User) return <div>please Login</div>
     
-    return <div>Welcome {User.username}</div>
+    return <div>Welcome {User.username} & {User.pass}</div>
     
 }
 

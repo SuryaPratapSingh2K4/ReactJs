@@ -9,7 +9,7 @@ function Login() {
 
   const submitform = (e) => {
     e.preventDefault();
-    setUser({username,pass})
+    setUser({ username, pass });
   };
 
   return (
