@@ -1,17 +1,17 @@
 import Footer from "./Footer/Footer";
 import Header from "./Header/Header";
-import Container from "./container/container.jsx";
-import Logo from "./Logo.jsx";
-import LogoutBtn from "./Header/LogoutBtn.jsx";
-import Input from "./Input.jsx";
-import Button from "./Button.jsx";
-import RTE from "./RTE.jsx";
-import { Select } from "./Select.jsx";
-import Signup from "./Signup.jsx";
-import Login from "./Login.jsx";
-import PostForm from "./Post-form/PostForm.jsx";
-import PostCard from "./PostCard.jsx";
-import Protected from "./AuthLayout.jsx";
+import Container from "./container/container";
+import Logo from "./Logo";
+import LogoutBtn from "./Header/LogoutBtn";
+import Input from "./Input";
+import Button from "./Button";
+import RTE from "./RTE";
+import Signup from "./Signup";
+import Login from "./Login";
+import PostForm from "./Post-form/PostForm";
+import PostCard from "./PostCard";
+import Protected from "./AuthLayout";
+import Select from "./Select";
 
 export {
     Footer,
@@ -22,10 +22,10 @@ export {
     Input,
     Button,
     RTE,
-    Select,
     Signup,
     Login,
     PostForm,
     PostCard,
-    Protected
+    Protected,
+    Select
 };

@@ -1,10 +1,11 @@
 import React from "react";
-import { Input, Select, Button, RTE } from "../index.jsx";
+// import { Input, Select, Button, RTE } from "../index.jsx";
 import { useCallback } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import service from "../../appwrite/config.js";
 import { useForm } from "react-hook-form";
+import { Input, Select, Button, RTE } from "..";
 
 function PostForm({post}) {
   const { register, handleSubmit, watch, setValue, getValues, control } =
@@ -13,29 +14,33 @@ function PostForm({post}) {
             title: post?.title || "",
             slug: post?.slug || "",
             content: post?.content || "",
-            featuredImage: post?.featuredImage || "",
+            // featuredImage: post?.featuredImage || "",
             status: post?.status || "active",
         },
     });
 
     const navigate = useNavigate();
-    const userData = useSelector((state) => state.user.userData);
+    const userData = useSelector((state) => state.auth.userData);
 
     const onSubmit = async (data) => {
         if(post){
             const file =  data.image[0] ? service.uploadFile(data.image[0]) : null;
+
             if(file){
                 service.deleteFile(post.featuredImage);
             }
+
             const dbPost = await service.updatePost(post.$id, {
                 ...data,
                 featuredImg: file ? file.$id : undefined,
             });
+
             if(dbPost){
                 navigate(`/post/${dbPost.$id}`);
             }
         } else {
-            const file = await service.uploadFile(data.image);
+            const file = await service.uploadFile(data.image[0]);
+
             if(file){
                 const fileId = file.$id;
                 data.featuredImage = fileId;
@@ -43,19 +48,21 @@ function PostForm({post}) {
                     ...data,
                     userId: userData.$id,
                 });
+
                 if(dbPost){
                     navigate(`/post/${dbPost.$id}`);
                 }
             }
         }
-    }
+    };
 
     const slugTransform = useCallback((value) => {
         if(value && typeof value === "string"){
             return value
                 .trim()
                 .toLowerCase()
-                .replace(/^[a-zA-Z\d\s]+/g, "-")
+                .replace(/[^a-zA-Z\d\s]+/g, "-")
+                .replace(/\s/g, "-");
         }
 
         return '';
@@ -65,16 +72,15 @@ function PostForm({post}) {
         const subscription = watch((value, { name }) => {
             if(name === "title"){
                 // const slug = slugTransform(value.title);
-                setValue("slug", slugTransform(value.title,
-                    {shouldValidate: true}));
+                setValue("slug", slugTransform(value.title),
+                    {shouldValidate: true});
             }
         });
         return () => subscription.unsubscribe();
     },[watch, setValue, slugTransform])
 
-     
-
-  return <form onSubmit={handleSubmit(onSubmit)} className="flex flex-wrap">
+    return (
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-wrap">
             <div className="w-2/3 px-2">
                 <Input
                     label="Title :"
@@ -121,6 +127,7 @@ function PostForm({post}) {
                 </Button>
             </div>
         </form>
+    );
 }
 
 export default PostForm;

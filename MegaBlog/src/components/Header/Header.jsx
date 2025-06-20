@@ -1,10 +1,8 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import LogoutBtn from './LogoutBtn'
-import Logo from '../Logo'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
-import { Container } from '../index'
+import { Container, Logo, LogoutBtn } from '../index'
 
 
 function Header() {
